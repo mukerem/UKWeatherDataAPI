@@ -1,0 +1,57 @@
+# version: "3.9"
+   
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    ports:
+      - 5435:5435
+    environment:
+      - POSTGRES_NAME=UKWeather
+      - POSTGRES_USER=mukerem
+      - POSTGRES_PASSWORD=adnan0887
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - POSTGRES_NAME=UKWeather
+      - POSTGRES_USER=mukerem
+      - POSTGRES_PASSWORD=adnan0887
+    depends_on:
+      - db
+
+
+# version: '3.8'
+
+# services:
+#   web:
+#     build: .
+#     command: python manage.py runserver 0.0.0.0:8000
+#     volumes:
+#       - ./API/:/usr/src/API/
+#     ports:
+#       - 8000:8000
+#     env_file:
+#       - ./env/bin/activate
+#     environment:
+#       - POSTGRES_NAME=UKWeather1
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=andalus
+#     depends_on:
+#       - db
+#   db:
+#     image: postgres:13.0-alpine
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data/
+#     environment:
+#       - POSTGRES_NAME=UKWeather1
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=andalus
+
+# volumes:
+#   postgres_data:
